@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --font: #faf9f9;
+  --primary-bg: #2b2218;
+  --secondary-bg: #5a442d;
+}
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif !important;
+  color: var(--font);
+  background-color: var(--primary-bg);
+}
+
+#contact-me {
+  background-color: var(--secondary-bg);
+  border-radius: 71px;
+  padding: 10px 30px;
+  font-weight: bold;
+}
