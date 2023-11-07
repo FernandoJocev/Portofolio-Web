@@ -10,11 +10,31 @@
 }
 
 body {
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100vw;
   font-family: 'Inter', sans-serif !important;
   color: var(--font);
   background-color: var(--primary-bg);
+  overflow-x: hidden !important;
+}
+
+#circle {
+  position: absolute;
+  background: var(--secondary-bg);
+  border-radius: 50%;
+}
+
+#circle-nofill {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid #faf9f9;
+}
+
+#home {
+  background-image: url('/images/bg-main.png');
+  min-width: 100vw;
+  min-height: 70vh;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #contact-me {
