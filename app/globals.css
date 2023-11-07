@@ -5,8 +5,17 @@
 
 :root {
   --font: #faf9f9;
+  --secondary-font: #2b2218;
   --primary-bg: #2b2218;
   --secondary-bg: #5a442d;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -15,6 +24,10 @@ body {
   color: var(--font);
   background-color: var(--primary-bg);
   overflow-x: hidden !important;
+}
+
+h1 {
+  color: var(--secondary-font);
 }
 
 #circle {
@@ -32,7 +45,7 @@ body {
 #home {
   background-image: url('/images/bg-main.png');
   min-width: 100vw;
-  min-height: 70vh;
+  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -42,4 +55,12 @@ body {
   border-radius: 71px;
   padding: 10px 30px;
   font-weight: bold;
+}
+
+#about {
+  background-image: url('/images/bg-secondary.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-width: 100vw;
+  min-height: 100vh;
 }
