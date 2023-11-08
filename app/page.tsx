@@ -1,8 +1,32 @@
 'use client'
+import { useEffect, useState } from 'react'
 /* eslint-disable @next/next/no-img-element */
 import Navbar from './components/Navbar'
+import axios from 'axios'
 
-const page = () => {
+const API = axios.create({
+  baseURL: 'http://localhost:3000/api/',
+})
+
+interface skillsProps {
+  id: number
+  name: string
+  image: string
+  year: string
+}
+
+const Page = () => {
+  const [skills, setSkills] = useState<skillsProps[]>([])
+
+  const getSkills = async () => {
+    const { data } = await API.get('getSkills')
+
+    setSkills(data.datas)
+  }
+
+  useEffect(() => {
+    getSkills()
+  }, [])
   return (
     <>
       <Navbar />
@@ -114,9 +138,75 @@ const page = () => {
         </div>
       </section>
 
-      <section id='skills'></section>
+      <section
+        id='skills'
+        className='grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 z-50 pl-40 pr-40 mt-10 pt-10 pb-10 gap-10'
+      >
+        {skills.map((result) => {
+          return (
+            <div
+              className='flex flex-col items-center justify-center bg-[#221B14] rounded-[10px] gap-y-2 p-5'
+              key={result?.id}
+            >
+              <div className='h-[115px] flex flex-col justify-center items-center'>
+                <img
+                  src={'/images/skills/' + result?.image}
+                  alt={result?.name}
+                  width={114}
+                  height={113}
+                />
+              </div>
+              <div className='flex flex-col items-center'>
+                <h1 className='text-[#FAF9F9] font-bold text-[20px]'>
+                  {result?.name}
+                </h1>
+                <p className='text-[#FAF9F9] text-[15px]'>{result?.year}</p>
+              </div>
+            </div>
+          )
+        })}
+      </section>
+
+      <section
+        id='feedback'
+        className='flex flex-col items-center pl-40 pr-40 mt-10 pt-10 pb-10 min-w-full'
+      >
+        <h1 className='text-[#FAF9F9] font-bold text-[40px]'>Feedback</h1>
+        <p className='text-[#EDC191] font-semibold text-[18px]'>
+          I’m glad to hear your feedback!
+        </p>
+        <form
+          action=''
+          method='POST'
+          className='flex flex-col items-center gap-y-5 min-w-[70%] mt-7'
+        >
+          <input
+            type='text'
+            name='name'
+            className='min-w-full h-[50px]'
+            placeholder='Your name...'
+          />
+          <input
+            type='text'
+            name='email'
+            className='min-w-full h-[50px]'
+            placeholder='Email...'
+          />
+          <textarea
+            name='feedback'
+            className='min-w-full h-[250px]'
+            placeholder='Your feedback'
+          ></textarea>
+          <button
+            type='submit'
+            className='min-w-full h-[50px] rounded-[62px] bg-[#EDC191] text-[#5A442D] font-semibold'
+          >
+            Submit
+          </button>
+        </form>
+      </section>
     </>
   )
 }
 
-export default page
+export default Page
