@@ -5,15 +5,12 @@ const Navbar = () => {
     const navBackground = () => {
       let navbar = document.getElementById('navbar')
       // console.log(window.scrollY)
-      if (
-        window.scrollY >= 1200 ||
-        (window.scrollY >= 570 && window.scrollY <= 770)
-      ) {
-        navbar?.classList.remove('pt-10')
-        navbar?.classList.add('active', 'pt-2')
+      if (window.scrollY >= 1200 || window.scrollY >= 500) {
+        navbar?.classList.remove('lg:pt-10')
+        navbar?.classList.add('active', 'lg:pt-2')
       } else {
-        navbar?.classList.remove('active', 'pt-2')
-        navbar?.classList.add('pt-10')
+        navbar?.classList.remove('active', 'lg:pt-2')
+        navbar?.classList.add('lg:pt-10')
       }
     }
 
@@ -23,7 +20,7 @@ const Navbar = () => {
     <>
       <div
         id='navbar'
-        className='fixed top-0 flex justify-between min-w-full z-50 pl-40 pr-40 pt-10 items-center overflow-x-hidden'
+        className='fixed top-0 flex justify-between min-w-full lg:pl-40 lg:pr-40 lg:pt-10 items-center overflow-x-hidden z-50'
       >
         <Link
           href=''
@@ -31,7 +28,7 @@ const Navbar = () => {
         >
           Epje.
         </Link>
-        <nav className='flex gap-x-20 items-center'>
+        <nav className='flex lg:gap-x-20 md:gap-x-5 items-center'>
           <div className='text-[#2B2218] flex font-bold gap-x-20 items-center'>
             <Link href='#home' className='active-link'>
               Home

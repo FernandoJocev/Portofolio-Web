@@ -94,6 +94,10 @@ h1 {
   }
 }
 
+#mobile-nav {
+  display: none;
+}
+
 #navbar a {
   position: relative;
 }
@@ -253,7 +257,7 @@ h1 {
   transition: 0.5s;
   background-image: url('assets/images/bg-main.png');
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -272,8 +276,8 @@ h1 {
   background-image: url('assets/images/bg-secondary.png');
   background-repeat: no-repeat;
   background-size: cover;
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
 }
 
 .items-card-active {
@@ -311,7 +315,7 @@ h1 {
   font-weight: 600;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   body {
     width: 100%;
     font-family: 'Inter', sans-serif !important;
@@ -319,14 +323,206 @@ h1 {
     background-color: var(--primary-bg);
     overflow-x: hidden !important;
   }
+
+  #navbar {
+    padding-right: 2rem;
+  }
+
+  #navbar nav {
+    column-gap: 5rem;
+  }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  @keyframes fall {
+    from {
+      content: '';
+      opacity: 0;
+      transform: translateY(-120%);
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes left-to-right {
+    from {
+      content: '';
+      opacity: 0;
+      transform: translateX(-120%);
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes close-left {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      content: '';
+      transform: translateX(-120%);
+      opacity: 0;
+    }
+  }
+
+  #navbar {
+    display: none;
+  }
+
   body {
     width: 100%;
     font-family: 'Inter', sans-serif !important;
     color: var(--font);
     background-color: var(--primary-bg);
     overflow-x: hidden !important;
+  }
+
+  #mobile-nav {
+    animation-name: left-to-right;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    display: flex;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    background-color: var(--secondary-bg);
+    color: var(--font);
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    background-color: var(--secondary-bg);
+    color: var(--font);
+    align-items: center;
+    justify-content: center;
+    row-gap: 40px;
+  }
+
+  #mobile-nav div {
+    display: flex;
+    align-items: center;
+    row-gap: 40px;
+    flex-direction: column;
+    color: var(--font);
+  }
+
+  #mobile-nav div a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    background-color: var(--font);
+    border-radius: 2px;
+    width: 0;
+    height: 3px;
+    bottom: -2px;
+    transition: 0.3s;
+  }
+
+  #mobile-nav div a {
+    position: relative;
+  }
+
+  #mobile-nav div a:nth-child(1) {
+    animation-name: fall;
+    animation-duration: 2s;
+    animation-delay: 0.7s;
+    animation-fill-mode: both;
+  }
+
+  #mobile-nav div a:nth-child(2) {
+    animation-name: fall;
+    animation-duration: 2s;
+    animation-delay: 0.8s;
+    animation-fill-mode: both;
+  }
+
+  #mobile-nav div a:nth-child(3) {
+    animation-name: fall;
+    animation-duration: 2s;
+    animation-delay: 0.9s;
+    animation-fill-mode: both;
+  }
+
+  #mobile-nav div a:nth-child(4) {
+    animation-name: fall;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-fill-mode: both;
+  }
+
+  #mobile-nav button {
+    animation-name: fall;
+    animation-duration: 2s;
+    animation-delay: 1.1s;
+    animation-fill-mode: both;
+  }
+
+  #mobile-nav div a:hover::after {
+    width: 100%;
+  }
+
+  #mobile-nav #contact-me::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--primary-bg);
+    border: none;
+    transition: 0.5s;
+    top: 0;
+    border-radius: 5px;
+  }
+
+  #mobile-nav #contact-me:hover::before {
+    width: 100%;
+    border: none;
+  }
+
+  #mobile-nav #contact-me:hover {
+    border: 1px solid var(--primary-bg);
+  }
+
+  #mobile-nav #contact-me {
+    background-color: transparent;
+    border-radius: 5px;
+    color: var(--font);
+    border: 1px solid var(--font);
+    padding: 10px 30px;
+    font-weight: bold;
+    transition: 0.5s;
+  }
+
+  .active-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    background-color: var(--font);
+    border-radius: 2px;
+    width: 100% !important;
+    height: 3px;
+    bottom: -2px;
+    transition: 0.3s;
+  }
+
+  #mobile-nav-parent #icon {
+    animation-name: fall;
+    animation-duration: 2s;
+    animation-fill-mode: both;
+  }
+
+  #mobile-nav-parent .cursor-pointer {
+    animation-delay: 0.5s;
+  }
+
+  #mobile-nav-parent .hide {
+    animation-name: close-left;
+    animation-duration: 1s;
+    animation-fill-mode: both;
   }
 }
