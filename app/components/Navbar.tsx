@@ -1,6 +1,18 @@
 import Link from 'next/link'
 
 const Navbar = () => {
+  const scrollActive = (navId: string) => {
+    const allElements = document.querySelectorAll('.active-link')
+    const navElement = document.getElementById(navId)
+
+    if (navElement) {
+      allElements.forEach((element) => {
+        element.classList.remove('active-link')
+      })
+      navElement.classList.add('active-link')
+    }
+  }
+
   if (typeof window !== 'undefined') {
     const navBackground = () => {
       let navbar = document.getElementById('navbar')
@@ -30,12 +42,35 @@ const Navbar = () => {
         </Link>
         <nav className='flex lg:gap-x-20 md:gap-x-5 items-center'>
           <div className='text-[#2B2218] flex font-bold gap-x-20 items-center'>
-            <Link href='#home' className='active-link'>
+            <Link
+              href='#home'
+              className='active-link'
+              id='home-nav'
+              onClick={() => scrollActive('home-nav')}
+            >
               Home
             </Link>
-            <Link href='#about'>About</Link>
-            <Link href='#skills'>Skills</Link>
-            <Link href='#feedback'>Feedback</Link>
+            <Link
+              href='#about'
+              onClick={() => scrollActive('about-nav')}
+              id='about-nav'
+            >
+              About
+            </Link>
+            <Link
+              href='#skills'
+              onClick={() => scrollActive('skills-nav')}
+              id='skills-nav'
+            >
+              Skills
+            </Link>
+            <Link
+              href='#feedback'
+              onClick={() => scrollActive('feedback-nav')}
+              id='feedback-nav'
+            >
+              Feedback
+            </Link>
           </div>
           <button
             id='contact-me'

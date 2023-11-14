@@ -94,6 +94,41 @@ h1 {
   }
 }
 
+#download-cv {
+  border: 1px solid var(--font);
+  border-radius: 4px;
+  color: var(--font);
+  padding: 5px 20px;
+  animation-name: left-to-right;
+  animation-duration: 1.5s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
+  margin-top: 10px;
+}
+
+#download-cv:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 100%;
+  z-index: -1;
+  background-color: var(--primary-bg);
+  border: none;
+  transition: 0.5s;
+  top: 0;
+  border-radius: 5px;
+}
+
+#download-cv:hover {
+  border: none;
+}
+
+#download-cv:hover::before {
+  width: 100%;
+  border: none;
+}
+
 #mobile-nav {
   display: none;
 }
@@ -393,7 +428,7 @@ h1 {
     background-color: var(--secondary-bg);
     color: var(--font);
     flex-direction: column;
-    width: 50%;
+    width: 70%;
     height: 100%;
     background-color: var(--secondary-bg);
     color: var(--font);
@@ -523,6 +558,13 @@ h1 {
   #mobile-nav-parent .hide {
     animation-name: close-left;
     animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+
+  #download-cv {
+    animation-name: ascend;
+    animation-duration: 1.5s;
+    animation-delay: 0.5s;
     animation-fill-mode: both;
   }
 }

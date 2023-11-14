@@ -19,15 +19,11 @@ import Image from 'next/image'
 import me_nobg from './assets/images/Me-nobg.png'
 import me_nobg2 from './assets/images/Me_2-nobg.jpg'
 
-// ScrollSpy
-import ScrollSpyNav from 'react-scrollspy-nav'
-
-// Sweet Alert
-import Swal from 'react-sweetalert2'
+// Hot Toast
+import toast, { Toaster } from 'react-hot-toast'
 
 const Page = () => {
   const [skills, setSkills] = useState<skillsProps[]>([])
-  const [swalProps, setSwalProps] = useState({})
   const {
     register,
     handleSubmit,
@@ -36,9 +32,18 @@ const Page = () => {
   } = useForm()
 
   const getSkills = async () => {
-    const data = await client.fetch('*[_type == "skills"]')
+    try {
+      const data = await client.fetch('*[_type == "skills"]')
 
-    setSkills(data)
+      toast.loading('Please wait... :)')
+
+      setSkills(data)
+
+      toast.dismiss()
+      toast.success('Data loaded! :)')
+    } catch (e: any) {
+      toast.error('Error :(', e)
+    }
   }
 
   const postFeedback = async (data: any) => {
@@ -48,6 +53,7 @@ const Page = () => {
       name: data.name,
       feedback: data.feedback,
     }
+    toast.loading('Please wait... :)')
 
     try {
       const created = await client.create(feedback, {
@@ -57,24 +63,14 @@ const Page = () => {
       })
 
       if (created) {
-        setSwalProps({
-          show: true,
-          icon: 'success',
-          title: 'Feedback sent!',
-          text: 'Thank you for your feedback! Have a blessed day :)',
-        })
+        toast.dismiss()
+        toast.success('Your feedback has been posted! Have a blessed day :)')
       }
       setValue('email', '')
       setValue('name', '')
       setValue('feedback', '')
     } catch (e: any) {
-      console.log(e)
-      setSwalProps({
-        show: true,
-        icon: 'error',
-        title: 'Error :(',
-        text: e,
-      })
+      toast.error('Error :(', e)
     }
   }
 
@@ -110,18 +106,12 @@ const Page = () => {
   }, [])
   return (
     <>
-      <ScrollSpyNav
-        scrollTargetIds={['home', 'about', 'skills', 'feedback']}
-        activeNavClass='active-link'
-        scrollDuration='100'
-        headerBackground='true'
-      >
-        <Navbar />
-      </ScrollSpyNav>
+      <Navbar />
 
       <MobileNav />
 
       <section id='home' className='relative'>
+        <Toaster />
         <span
           id='home-circle'
           className='sm:top-[-148px] mobile:top-[-50px] sm:left-[-155px] mobile:left-[-50px] sm:w-[310px] sm:h-[297px] mobile:w-[100px] mobile:h-[100px]'
@@ -140,25 +130,38 @@ const Page = () => {
           id='me'
           className='absolute bottom-0 w-full mobile:right-[-70px]'
         />
-        <div className='mobile:flex mobile:flex-col mobile:justify-center mobile:h-full'>
-          <h1
-            className='text-center text-[#2B2218] md:absolute md:top-[53%] md:left-[15%] font-medium md:text-[20px] mobile:text-[17px] tracking-[1px]'
-            id='main-text'
-          >
-            <Typewriter
-              onInit={(typewriter) => {
-                typewriter
-                  .typeString(
-                    'Hi! I’m <b> Fernando Jocevine !</b> <br /> Also known as <b> Epje!</b>'
-                  )
-                  .changeDelay(1)
-                  .start()
+        <div className='mobile:flex mobile:flex-col mobile:justify-center mobile:h-full mobile:w-full mobile:items-center md:items-start md:pl-24 md:pt-10 lg:pl-32'>
+          <div className='mobile:flex mobile:flex-col mobile:items-center gap-y-1'>
+            <h1
+              className='text-center text-[#2B2218] font-medium lg:text-[32px] md:text-[20px] mobile:text-[17px] tracking-[1px]'
+              id='main-text'
+            >
+              <Typewriter
+                onInit={(typewriter) => {
+                  typewriter
+                    .typeString(
+                      'Hi! I’m <b> Fernando Jocevine !</b> <br /> Also known as <b> Epje!</b>'
+                    )
+                    .changeDelay(1)
+                    .start()
+                }}
+                options={{
+                  delay: 40,
+                }}
+              />
+            </h1>
+            <button
+              id='download-cv'
+              onClick={(): void => {
+                window.open(
+                  'https://drive.google.com/file/d/1lArtO_-tfM2eKQBrYv6apOQePOvbl_9A/view?usp=drive_link',
+                  '_blank'
+                )
               }}
-              options={{
-                delay: 40,
-              }}
-            />
-          </h1>
+            >
+              Download CV
+            </button>
+          </div>
         </div>
       </section>
 
@@ -326,7 +329,6 @@ const Page = () => {
             </button>
           </form>
         </div>
-        <Swal {...swalProps} />
       </section>
       <Footer />
     </>

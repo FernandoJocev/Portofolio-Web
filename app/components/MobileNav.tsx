@@ -13,6 +13,18 @@ const MobileNav = () => {
     }
     element?.classList.add('hide')
   }
+
+  const scrollActive = (navId: string) => {
+    const allElements = document.querySelectorAll('.active-link')
+    const navElement = document.getElementById(navId)
+
+    if (navElement) {
+      allElements.forEach((element) => {
+        element.classList.remove('active-link')
+      })
+      navElement.classList.add('active-link')
+    }
+  }
   return (
     <>
       <div className='lg:hidden' id='mobile-nav-parent'>
@@ -34,10 +46,34 @@ const MobileNav = () => {
 
         <nav id='mobile-nav' className='!hidden'>
           <div>
-            <Link href='#home'>Home</Link>
-            <Link href='#about'>About</Link>
-            <Link href='#skills'>Skills</Link>
-            <Link href='#feedback'>Feedback</Link>
+            <Link
+              href='#home'
+              id='home-nav'
+              onClick={() => scrollActive('home-nav')}
+            >
+              Home
+            </Link>
+            <Link
+              href='#about'
+              id='about-nav'
+              onClick={() => scrollActive('about-nav')}
+            >
+              About
+            </Link>
+            <Link
+              href='#skills'
+              id='skills-nav'
+              onClick={() => scrollActive('skills-nav')}
+            >
+              Skills
+            </Link>
+            <Link
+              href='#feedback'
+              id='feedback-nav'
+              onClick={() => scrollActive('feedback-nav')}
+            >
+              Feedback
+            </Link>
           </div>
           <button
             id='contact-me'
