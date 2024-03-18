@@ -24,6 +24,8 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const Page = () => {
   const [skills, setSkills] = useState<skillsProps[]>([])
+  const [age, setAge] = useState<number>()
+
   const {
     register,
     handleSubmit,
@@ -35,12 +37,7 @@ const Page = () => {
     try {
       const data = await client.fetch('*[_type == "skills"]')
 
-      toast.loading('Please wait... :)')
-
       setSkills(data)
-
-      toast.dismiss()
-      toast.success('Data loaded! :)')
     } catch (e: any) {
       toast.error('Error :(', e)
     }
@@ -102,6 +99,11 @@ const Page = () => {
   }
 
   useEffect(() => {
+    const d = Date.parse('2006-01-21')
+    const milSec = Date.now() - d
+    const date = new Date(milSec)
+
+    setAge(Math.abs(date.getFullYear() - 1970))
     getSkills()
   }, [])
   return (
@@ -122,7 +124,7 @@ const Page = () => {
         ></span>
         <span
           id='home-circle-nofill'
-          className='lg:top-[-190px] md:top-[-220px] mobile:top-[-80px] md:right-[-170px] mobile:right-[-70px] md:w-[424px] md:h-[409px] mobile:w-[180px] mobile:h-[170px]'
+          className='lg:top-[-190px] md:top-[-220px] mobile:top-[-80px] md:right-[-170px] mobile:right-[-70px] md:w-[424px] md:h-[409px] mobile:w-[180px] mobile:h-[170px] animation-delay-1800'
         ></span>
         <Image
           src={me_nobg}
@@ -222,7 +224,7 @@ const Page = () => {
             <i className='ri-calendar-line text-[#2B2218] text-[24px]'></i>
             <div className='flex gap-x-5 items-center'>
               <h1>Age : </h1>
-              <b className='text-[#2b2218]'>17 y.o</b>
+              <b className='text-[#2b2218]'>{age} y.o</b>
             </div>
           </div>
 

@@ -37,7 +37,7 @@ const Footer = () => {
           className='ri-linkedin-box-fill'
           onClick={() => {
             window.open(
-              'https://www.linkedin.com/in/fernando-jocevine-b5743a246/',
+              'https://linkedin.com/in/fernando-jocevine-2111b624a',
               '_blank'
             )
           }}

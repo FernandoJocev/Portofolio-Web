@@ -44,6 +44,11 @@ h1 {
   transition: 0.3s;
 }
 
+/* Animation Delays */
+.animation-delay-1800 {
+  animation-delay: 1.8s !important;
+}
+
 /* Keyframes */
 
 @keyframes fall {
@@ -226,7 +231,7 @@ h1 {
   border-radius: 50%;
   animation-name: fall;
   animation-duration: 1.5s;
-  animation-delay: 1s;
+  animation-delay: 0.9s;
   animation-fill-mode: both;
 }
 
@@ -236,7 +241,7 @@ h1 {
   border: 1px solid #faf9f9;
   animation-name: fall;
   animation-duration: 1.5s;
-  animation-delay: 1.8s;
+  animation-delay: 1.5s;
   animation-fill-mode: both;
 }
 
