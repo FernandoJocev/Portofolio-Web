@@ -25,6 +25,7 @@ import toast, { Toaster } from 'react-hot-toast'
 const Page = () => {
   const [skills, setSkills] = useState<skillsProps[]>([])
   const [age, setAge] = useState<number>()
+  const [semester, setSemester] = useState<number>()
 
   const {
     register,
@@ -99,11 +100,17 @@ const Page = () => {
   }
 
   useEffect(() => {
-    const d = Date.parse('2006-01-21')
-    const milSec = Date.now() - d
-    const date = new Date(milSec)
-
+    let d = Date.parse('2006-01-21')
+    let milSec = Date.now() - d
+    let date = new Date(milSec)
     setAge(Math.abs(date.getFullYear() - 1970))
+
+    d = Date.parse('2023-8-01')
+    milSec = Date.now() - d
+    console.log(Date.now())
+    date = new Date(milSec)
+    setSemester(Math.abs(date.getFullYear() - 1970) + 2)
+
     getSkills()
   }, [])
   return (
@@ -142,7 +149,7 @@ const Page = () => {
                 onInit={(typewriter) => {
                   typewriter
                     .typeString(
-                      'Hi! I’m <b> Fernando Jocevine !</b> <br /> Also known as <b> Epje!</b>'
+                      'Hi! I’m <b> Fernando Jocevine !</b> <br /> Also known as <b> Efje!</b>'
                     )
                     .changeDelay(1)
                     .start()
@@ -214,7 +221,8 @@ const Page = () => {
           <div className='md:mt-10 mobile:mt-5 md:mb-10 mobile:mb-5'>
             <p className='font-semibold md:text-[15px] mobile:text-[12px] text-[#5A442D] lg:text-start'>
               I’m currently a student at ITBSS with Sistem Teknik Informatika
-              major and was in the 1st semester!
+              major and was in the{' '}
+              {semester == 3 ? semester + 'rd' : semester + 'th'} semester!
             </p>
           </div>
         </div>
