@@ -266,6 +266,13 @@ const Page = () => {
         id='skills'
         className='z-50 lg:pl-40 lg:pr-40 md:pl-28 mobile:pl-5 md:pr-28 mobile:pr-5 mt-10 pt-10 pb-10'
       >
+        <h1 className='text-[#FAF9F9] font-bold md:text-[40px] mobile:text-[24px] text-center mt-10'>
+          Skills
+        </h1>
+        <p className='text-[#EDC191] font-semibold md:text-[18px] mobile:text-[14px] text-center'>
+          Here are slight insights of my knowledge in programming.
+        </p>
+
         <div
           className='mt-10 lg:grid-cols-3 mobile:grid-cols-1 md:grid-cols-2 gap-10 z-50 hidden'
           id='items-card'
