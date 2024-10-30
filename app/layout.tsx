@@ -4,6 +4,7 @@ import './globals.css'
 import 'remixicon/fonts/remixicon.css'
 import { StaticImageData } from 'next/image'
 import icon from './assets/icons/favicon-32x32.png'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,9 +29,12 @@ export default function RootLayout({
           name='viewport'
           content='width=device-width; initial-scale=1.0'
         ></meta>
-        <link rel="shortcut icon" href={icon.src} type="image/x-icon" />
+        <link rel='shortcut icon' href={icon.src} type='image/x-icon' />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
