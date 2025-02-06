@@ -47,7 +47,7 @@ const Page = () => {
   const postFeedback = async (data: any) => {
     const feedback = {
       _type: 'feedback',
-      email: data.email,
+      // email: data.email,
       name: data.name,
       feedback: data.feedback,
     }
@@ -64,7 +64,7 @@ const Page = () => {
         toast.dismiss()
         toast.success('Your feedback has been posted! Have a blessed day :)')
       }
-      setValue('email', '')
+      // setValue('email', '')
       setValue('name', '')
       setValue('feedback', '')
     } catch (e: any) {
@@ -311,7 +311,7 @@ const Page = () => {
             Feedback
           </h1>
           <p className='text-[#EDC191] font-semibold md:text-[18px] mobile:text-[14px]'>
-            I’m glad to hear your feedback!
+            I’m glad to hear your feedback or comments!
           </p>
           <form
             onSubmit={handleSubmit(postFeedback)}
@@ -325,13 +325,13 @@ const Page = () => {
               {...register('name', { required: true })}
               required
             />
-            <input
+            {/* <input
               type='text'
               {...register('email', { required: true })}
               className='min-w-full h-[50px]'
               placeholder='Email...'
               required
-            />
+            /> */}
             <textarea
               {...register('feedback', { required: true })}
               className='min-w-full h-[250px]'
