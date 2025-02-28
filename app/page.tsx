@@ -105,11 +105,16 @@ const Page = () => {
     let date = new Date(milSec)
     setAge(Math.abs(date.getFullYear() - 1970))
 
-    d = Date.parse('2023-8-01')
+    d = Date.parse('2022-8-01')
     milSec = Date.now() - d
-    console.log(Date.now())
     date = new Date(milSec)
-    setSemester(Math.abs(date.getFullYear() - 1970) + 2)
+    let j = 2;
+    let i = Math.abs(date.getFullYear() - 1970) + j;
+
+    do {
+      setSemester(Math.abs(date.getFullYear() - 1970) + (j + 1)));
+      j++;
+    } while (i > j)
 
     getSkills()
   }, [])
