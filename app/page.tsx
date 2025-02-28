@@ -1,163 +1,164 @@
-'use client'
-import { useEffect, useState } from 'react'
-import { client } from './sanity/services/sanityClient'
-import { useForm } from 'react-hook-form'
+"use client";
+import { useEffect, useState } from "react";
+import { client } from "./sanity/services/sanityClient";
+import { useForm } from "react-hook-form";
 
 // Components
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import MobileNav from './components/MobileNav'
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import MobileNav from "./components/MobileNav";
 
 // Typewriter Effect
-import Typewriter from 'typewriter-effect'
+import Typewriter from "typewriter-effect";
 
 // Interfaces
-import { skillsProps } from './interfaces/skills.interface'
+import { skillsProps } from "./interfaces/skills.interface";
 
 // Images
-import Image from 'next/image'
-import me_nobg from './assets/images/Me-nobg.png'
-import me_nobg2 from './assets/images/Me_2-nobg.jpg'
+import Image from "next/image";
+import me_nobg from "./assets/images/Me-nobg.png";
+import me_nobg2 from "./assets/images/Me_2-nobg.jpg";
 
 // Hot Toast
-import toast, { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from "react-hot-toast";
 
 const Page = () => {
-  const [skills, setSkills] = useState<skillsProps[]>([])
-  const [age, setAge] = useState<number>()
-  const [semester, setSemester] = useState<number>()
+  const [skills, setSkills] = useState<skillsProps[]>([]);
+  const [age, setAge] = useState<number>();
+  const [semester, setSemester] = useState<number>();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm()
+  } = useForm();
 
   const getSkills = async () => {
     try {
-      const data = await client.fetch('*[_type == "skills"]')
+      const data = await client.fetch('*[_type == "skills"]');
 
-      setSkills(data)
+      setSkills(data);
     } catch (e: any) {
-      toast.error('Error :(', e)
+      toast.error("Error :(", e);
     }
-  }
+  };
 
   const postFeedback = async (data: any) => {
     const feedback = {
-      _type: 'feedback',
+      _type: "feedback",
       email: data.email,
       name: data.name,
       feedback: data.feedback,
-    }
-    toast.loading('Please wait... :)')
+    };
+    toast.loading("Please wait... :)");
 
     try {
       const created = await client.create(feedback, {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_SANITY_TOKEN}`,
         },
-      })
+      });
 
       if (created) {
-        toast.dismiss()
-        toast.success('Your feedback has been posted! Have a blessed day :)')
+        toast.dismiss();
+        toast.success("Your feedback has been posted! Have a blessed day :)");
       }
-      setValue('email', '')
-      setValue('name', '')
-      setValue('feedback', '')
+      setValue("email", "");
+      setValue("name", "");
+      setValue("feedback", "");
     } catch (e: any) {
-      toast.error('Error :(', e)
+      toast.error("Error :(", e);
     }
-  }
+  };
 
-  if (typeof window !== 'undefined') {
-    window.addEventListener('scroll', function () {
-      let midCircle = document.querySelectorAll('#mid-circle')
-      let midCircleNofill = document.getElementById('mid-circle-nofill')
+  if (typeof window !== "undefined") {
+    window.addEventListener("scroll", function () {
+      let midCircle = document.querySelectorAll("#mid-circle");
+      let midCircleNofill = document.getElementById("mid-circle-nofill");
 
-      let aboutCircle = document.getElementById('about-circle')
+      let aboutCircle = document.getElementById("about-circle");
 
-      let skillsCard = document.getElementById('items-card')
+      let skillsCard = document.getElementById("items-card");
 
       if (window.scrollY >= 20) {
         midCircle.forEach((element) => {
-          element?.classList.add('mid-circle-active')
-        })
-        midCircleNofill?.classList.add('mid-circle-nofill-active')
+          element?.classList.add("mid-circle-active");
+        });
+        midCircleNofill?.classList.add("mid-circle-nofill-active");
       }
 
       if (window.scrollY >= 470) {
-        aboutCircle?.classList.add('about-circle-active')
+        aboutCircle?.classList.add("about-circle-active");
       }
 
       if (window.scrollY >= 1000) {
-        skillsCard?.classList.remove('hidden')
-        skillsCard?.classList.add('items-card-active', 'grid')
+        skillsCard?.classList.remove("hidden");
+        skillsCard?.classList.add("items-card-active", "grid");
       }
-    })
+    });
   }
 
   useEffect(() => {
-    let d = Date.parse('2006-01-21')
-    let milSec = Date.now() - d
-    let date = new Date(milSec)
-    setAge(Math.abs(date.getFullYear() - 1970))
+    let d = Date.parse("2006-01-21");
+    let milSec = Date.now() - d;
+    let date = new Date(milSec);
+    setAge(Math.abs(date.getFullYear() - 1970));
 
-    d = Date.parse('2022-8-01')
-    milSec = Date.now() - d
-    date = new Date(milSec)
+    d = Date.parse("2023-8-01");
+    milSec = Date.now() - d;
+    date = new Date(milSec);
     let j = 2;
     let i = Math.abs(date.getFullYear() - 1970) + j;
 
     do {
-      setSemester(Math.abs(date.getFullYear() - 1970) + (j + 1)));
-      j++;
-    } while (i > j)
+      setSemester(Math.abs(date.getFullYear() - 1970) + (j + 1));
 
-    getSkills()
-  }, [])
+      j++;
+    } while (i > j);
+
+    getSkills();
+  }, []);
   return (
     <>
       <Navbar />
 
       <MobileNav />
 
-      <section id='home' className='relative'>
+      <section id="home" className="relative">
         <Toaster />
         <span
-          id='home-circle'
-          className='sm:top-[-148px] mobile:top-[-50px] sm:left-[-155px] mobile:left-[-50px] sm:w-[310px] sm:h-[297px] mobile:w-[100px] mobile:h-[100px]'
+          id="home-circle"
+          className="sm:top-[-148px] mobile:top-[-50px] sm:left-[-155px] mobile:left-[-50px] sm:w-[310px] sm:h-[297px] mobile:w-[100px] mobile:h-[100px]"
         ></span>
         <span
-          id='home-circle-nofill'
-          className='md:top-[-204px] mobile:top-[-67px] md:left-[-193px] mobile:left-[-67px] md:w-[424px] md:h-[409px] mobile:w-[150px] mobile:h-[150px]'
+          id="home-circle-nofill"
+          className="md:top-[-204px] mobile:top-[-67px] md:left-[-193px] mobile:left-[-67px] md:w-[424px] md:h-[409px] mobile:w-[150px] mobile:h-[150px]"
         ></span>
         <span
-          id='home-circle-nofill'
-          className='lg:top-[-190px] md:top-[-220px] mobile:top-[-80px] md:right-[-170px] mobile:right-[-70px] md:w-[424px] md:h-[409px] mobile:w-[180px] mobile:h-[170px] animation-delay-1800'
+          id="home-circle-nofill"
+          className="lg:top-[-190px] md:top-[-220px] mobile:top-[-80px] md:right-[-170px] mobile:right-[-70px] md:w-[424px] md:h-[409px] mobile:w-[180px] mobile:h-[170px] animation-delay-1800"
         ></span>
         <Image
           src={me_nobg}
-          alt='Me'
-          id='me'
-          className='absolute bottom-0 w-full mobile:right-[-70px]'
+          alt="Me"
+          id="me"
+          className="absolute bottom-0 w-full mobile:right-[-70px]"
         />
-        <div className='mobile:flex mobile:flex-col mobile:justify-center mobile:h-full mobile:w-full mobile:items-center md:items-start md:pl-24 md:pt-10 lg:pl-32'>
-          <div className='mobile:flex mobile:flex-col mobile:items-center gap-y-1'>
+        <div className="mobile:flex mobile:flex-col mobile:justify-center mobile:h-full mobile:w-full mobile:items-center md:items-start md:pl-24 md:pt-10 lg:pl-32">
+          <div className="mobile:flex mobile:flex-col mobile:items-center gap-y-1">
             <h1
-              className='text-center text-[#2B2218] font-medium lg:text-[32px] md:text-[20px] mobile:text-[17px] tracking-[1px]'
-              id='main-text'
+              className="text-center text-[#2B2218] font-medium lg:text-[32px] md:text-[20px] mobile:text-[17px] tracking-[1px]"
+              id="main-text"
             >
               <Typewriter
                 onInit={(typewriter) => {
                   typewriter
                     .typeString(
-                      'Hi! I’m <b> Fernando Jocevine !</b> <br /> Also known as <b> Efje!</b>'
+                      "Hi! I’m <b> Fernando Jocevine !</b> <br /> Also known as <b> Efje!</b>"
                     )
                     .changeDelay(1)
-                    .start()
+                    .start();
                 }}
                 options={{
                   delay: 40,
@@ -165,12 +166,12 @@ const Page = () => {
               />
             </h1>
             <button
-              id='download-cv'
+              id="download-cv"
               onClick={(): void => {
                 window.open(
-                  'https://drive.google.com/file/d/1lArtO_-tfM2eKQBrYv6apOQePOvbl_9A/view?usp=drive_link',
-                  '_blank'
-                )
+                  "https://drive.google.com/file/d/1lArtO_-tfM2eKQBrYv6apOQePOvbl_9A/view?usp=drive_link",
+                  "_blank"
+                );
               }}
             >
               Download CV
@@ -179,116 +180,116 @@ const Page = () => {
         </div>
       </section>
 
-      <div className='relative top-[190px]'>
+      <div className="relative top-[190px]">
         <span
-          id='mid-circle'
-          className='lg:bottom-[-40px] md:bottom-[50px] mobile:bottom-[70px] lg:left-[90px] md:left-[-100px] mobile:left-[-120px] w-[135px] h-[123px] !bg-[#E2B587] opacity-[80%]'
+          id="mid-circle"
+          className="lg:bottom-[-40px] md:bottom-[50px] mobile:bottom-[70px] lg:left-[90px] md:left-[-100px] mobile:left-[-120px] w-[135px] h-[123px] !bg-[#E2B587] opacity-[80%]"
         ></span>
         <span
-          id='mid-circle'
-          className='md:bottom-[142px] mobile:bottom-[150px] lg:right-[100px] md:right-[40px] mobile:right-[-90px] w-[135px] h-[123px] !bg-[#E2B587] opacity-[80%] -z-10'
+          id="mid-circle"
+          className="md:bottom-[142px] mobile:bottom-[150px] lg:right-[100px] md:right-[40px] mobile:right-[-90px] w-[135px] h-[123px] !bg-[#E2B587] opacity-[80%] -z-10"
         ></span>
         <span
-          id='mid-circle-nofill'
-          className='md:bottom-[132px] lg:right-[180px] mobile:bottom-[150px] md:right-[100px] mobile:right-[-40px] w-[135px] h-[123px] -z-10'
+          id="mid-circle-nofill"
+          className="md:bottom-[132px] lg:right-[180px] mobile:bottom-[150px] md:right-[100px] mobile:right-[-40px] w-[135px] h-[123px] -z-10"
         ></span>
       </div>
-      <h1 className='text-center mt-[35px] font-semibold md:text-[24px] mobile:text-[14px] text-[#FAF9F9]'>
+      <h1 className="text-center mt-[35px] font-semibold md:text-[24px] mobile:text-[14px] text-[#FAF9F9]">
         I’m very interested in
-        <br /> <b className='text-[#EDC191]'> Web Dev </b> &
-        <b className='text-[#EDC191]'> Mobile Dev. </b>
+        <br /> <b className="text-[#EDC191]"> Web Dev </b> &
+        <b className="text-[#EDC191]"> Mobile Dev. </b>
       </h1>
 
       <section
-        id='about'
-        className='relative lg:pl-40 lg:pr-40 mt-10 md:pt-10 md:pb-10 flex flex-col md:gap-y-10 mobile:gap-5 items-center justify-center'
+        id="about"
+        className="relative lg:pl-40 lg:pr-40 mt-10 md:pt-10 md:pb-10 flex flex-col md:gap-y-10 mobile:gap-5 items-center justify-center"
       >
         <span
-          id='about-circle'
-          className='md:bottom-[-148px] mobile:bottom-[-100px] right-[-155px] md:w-[310px] md:h-[297px] mobile:w-[210px] mobile:h-[197px] opacity-80 absolute'
+          id="about-circle"
+          className="md:bottom-[-148px] mobile:bottom-[-100px] right-[-155px] md:w-[310px] md:h-[297px] mobile:w-[210px] mobile:h-[197px] opacity-80 absolute"
         ></span>
         <span
-          id='about-circle-nofill'
-          className='md:top-[-270px] lg:top-[-260px] mobile:top-[-190px] lg:left-[-50px] md:w-[424px] md:h-[409px] md:left-[-200px] mobile:left-[-190px] mobile:w-[250px] mobile:h-[250px]'
+          id="about-circle-nofill"
+          className="md:top-[-270px] lg:top-[-260px] mobile:top-[-190px] lg:left-[-50px] md:w-[424px] md:h-[409px] md:left-[-200px] mobile:left-[-190px] mobile:w-[250px] mobile:h-[250px]"
         ></span>
         <Image
           src={me_nobg2}
-          alt='Me'
-          className='absolute bottom-0 left-0 min-w-full'
+          alt="Me"
+          className="absolute bottom-0 left-0 min-w-full"
         />
-        <h1 className='font-semibold md:text-[32px] mobile:text-[24px] text-[#2B2218] md:mt-[-1rem]'>
+        <h1 className="font-semibold md:text-[32px] mobile:text-[24px] text-[#2B2218] md:mt-[-1rem]">
           About Me
         </h1>
-        <div className='flex flex-col items-center lg:text-start mobile:text-center w-[55%]'>
-          <h1 className='font-medium md:text-[28px] mobile:text-[18px] text-[#2B2218] z-40'>
+        <div className="flex flex-col items-center lg:text-start mobile:text-center w-[55%]">
+          <h1 className="font-medium md:text-[28px] mobile:text-[18px] text-[#2B2218] z-40">
             Hi! It’s me again, <b>Fernando Jocevine</b>
           </h1>
-          <div className='md:mt-10 mobile:mt-5 md:mb-10 mobile:mb-5'>
-            <p className='font-semibold md:text-[15px] mobile:text-[12px] text-[#5A442D] lg:text-start'>
+          <div className="md:mt-10 mobile:mt-5 md:mb-10 mobile:mb-5">
+            <p className="font-semibold md:text-[15px] mobile:text-[12px] text-[#5A442D] lg:text-start">
               I’m currently a student at ITBSS with Sistem Teknik Informatika
-              major and was in the{' '}
-              {semester == 3 ? semester + 'rd' : semester + 'th'} semester!
+              major and was in the{" "}
+              {semester == 3 ? semester + "rd" : semester + "th"} semester!
             </p>
           </div>
         </div>
 
-        <div className='grid gap-y-5 md:grid-cols-2 sm:grid-cols-1 mobile:text-[12px] lg:text-[15px]'>
-          <div className='flex items-center gap-x-2'>
-            <i className='ri-calendar-line text-[#2B2218] text-[24px]'></i>
-            <div className='flex gap-x-5 items-center'>
+        <div className="grid gap-y-5 md:grid-cols-2 sm:grid-cols-1 mobile:text-[12px] lg:text-[15px]">
+          <div className="flex items-center gap-x-2">
+            <i className="ri-calendar-line text-[#2B2218] text-[24px]"></i>
+            <div className="flex gap-x-5 items-center">
               <h1>Age : </h1>
-              <b className='text-[#2b2218]'>{age} y.o</b>
+              <b className="text-[#2b2218]">{age} y.o</b>
             </div>
           </div>
 
-          <div className='flex items-center gap-x-2 lg:ml-10 md:ml-5'>
-            <i className='ri-heart-line text-[#2B2218] text-[24px]'></i>
-            <div className='flex gap-x-5 items-center'>
+          <div className="flex items-center gap-x-2 lg:ml-10 md:ml-5">
+            <i className="ri-heart-line text-[#2B2218] text-[24px]"></i>
+            <div className="flex gap-x-5 items-center">
               <h1>Like : </h1>
-              <b className='text-[#2b2218]'>Cheese</b>
+              <b className="text-[#2b2218]">Cheese</b>
             </div>
           </div>
 
-          <div className='flex items-center gap-x-2'>
-            <i className='ri-code-s-slash-line text-[#2B2218] text-[24px]'></i>
-            <div className='flex gap-x-5 items-center'>
+          <div className="flex items-center gap-x-2">
+            <i className="ri-code-s-slash-line text-[#2B2218] text-[24px]"></i>
+            <div className="flex gap-x-5 items-center">
               <h1>Interest : </h1>
-              <b className='text-[#2b2218]'>Web & Mobile Dev</b>
+              <b className="text-[#2b2218]">Web & Mobile Dev</b>
             </div>
           </div>
 
-          <div className='flex items-center gap-x-2 lg:ml-10 md:ml-5'>
-            <i className='ri-dislike-line text-[#2B2218] text-[24px]'></i>
-            <div className='flex gap-x-5 items-center'>
+          <div className="flex items-center gap-x-2 lg:ml-10 md:ml-5">
+            <i className="ri-dislike-line text-[#2B2218] text-[24px]"></i>
+            <div className="flex gap-x-5 items-center">
               <h1>Don’t like : </h1>
-              <b className='text-[#2b2218]'>Bitter melon</b>
+              <b className="text-[#2b2218]">Bitter melon</b>
             </div>
           </div>
         </div>
       </section>
 
       <section
-        id='skills'
-        className='z-50 lg:pl-40 lg:pr-40 md:pl-28 mobile:pl-5 md:pr-28 mobile:pr-5 mt-10 pt-10 pb-10'
+        id="skills"
+        className="z-50 lg:pl-40 lg:pr-40 md:pl-28 mobile:pl-5 md:pr-28 mobile:pr-5 mt-10 pt-10 pb-10"
       >
-        <h1 className='text-[#FAF9F9] font-bold md:text-[40px] mobile:text-[24px] text-center mt-10'>
+        <h1 className="text-[#FAF9F9] font-bold md:text-[40px] mobile:text-[24px] text-center mt-10">
           Skills
         </h1>
-        <p className='text-[#EDC191] font-semibold md:text-[18px] mobile:text-[14px] text-center'>
+        <p className="text-[#EDC191] font-semibold md:text-[18px] mobile:text-[14px] text-center">
           Here are slight insights of my knowledge in programming.
         </p>
 
         <div
-          className='mt-10 lg:grid-cols-3 mobile:grid-cols-1 md:grid-cols-2 gap-10 z-50 hidden'
-          id='items-card'
+          className="mt-10 lg:grid-cols-3 mobile:grid-cols-1 md:grid-cols-2 gap-10 z-50 hidden"
+          id="items-card"
         >
           {skills.map((result, idx) => {
             return (
               <div
-                className='flex flex-col items-center justify-center bg-[#221B14] rounded-[10px] gap-y-2 p-5'
+                className="flex flex-col items-center justify-center bg-[#221B14] rounded-[10px] gap-y-2 p-5"
                 key={idx}
               >
-                <div className='h-[115px] flex flex-col justify-center items-center'>
+                <div className="h-[115px] flex flex-col justify-center items-center">
                   <Image
                     src={result?.image}
                     alt={result?.name}
@@ -296,56 +297,56 @@ const Page = () => {
                     height={113}
                   />
                 </div>
-                <div className='flex flex-col items-center mobile:text-center'>
-                  <h1 className='text-[#FAF9F9] font-bold md:text-[20px] mobile:text-[18px]'>
+                <div className="flex flex-col items-center mobile:text-center">
+                  <h1 className="text-[#FAF9F9] font-bold md:text-[20px] mobile:text-[18px]">
                     {result?.name}
                   </h1>
-                  <p className='text-[#FAF9F9] md:text-[15px] mobile:text-[14px]'>
+                  <p className="text-[#FAF9F9] md:text-[15px] mobile:text-[14px]">
                     {result?.year}
                   </p>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </section>
 
-      <section id='feedback' className='lg:pl-40 lg:pr-40 pt-10 pb-10 w-full'>
-        <div className='mt-10 flex flex-col items-center w-full'>
-          <h1 className='text-[#FAF9F9] font-bold md:text-[40px] mobile:text-[24px]'>
+      <section id="feedback" className="lg:pl-40 lg:pr-40 pt-10 pb-10 w-full">
+        <div className="mt-10 flex flex-col items-center w-full">
+          <h1 className="text-[#FAF9F9] font-bold md:text-[40px] mobile:text-[24px]">
             Feedback
           </h1>
-          <p className='text-[#EDC191] font-semibold md:text-[18px] mobile:text-[14px]'>
+          <p className="text-[#EDC191] font-semibold md:text-[18px] mobile:text-[14px]">
             I’m glad to hear your feedback!
           </p>
           <form
             onSubmit={handleSubmit(postFeedback)}
-            method='POST'
-            className='flex flex-col items-center gap-y-5 min-w-[70%] mt-7'
+            method="POST"
+            className="flex flex-col items-center gap-y-5 min-w-[70%] mt-7"
           >
             <input
-              type='text'
-              className='min-w-full h-[50px]'
-              placeholder='Your name...'
-              {...register('name', { required: true })}
+              type="text"
+              className="min-w-full h-[50px]"
+              placeholder="Your name..."
+              {...register("name", { required: true })}
               required
             />
             <input
-              type='text'
-              {...register('email', { required: true })}
-              className='min-w-full h-[50px]'
-              placeholder='Email...'
+              type="text"
+              {...register("email", { required: true })}
+              className="min-w-full h-[50px]"
+              placeholder="Email..."
               required
             />
             <textarea
-              {...register('feedback', { required: true })}
-              className='min-w-full h-[250px]'
-              placeholder='Your feedback'
+              {...register("feedback", { required: true })}
+              className="min-w-full h-[250px]"
+              placeholder="Your feedback"
               required
             ></textarea>
             <button
-              type='submit'
-              className='min-w-full h-[50px] rounded-[62px] bg-[#EDC191] text-[#5A442D] font-semibold'
+              type="submit"
+              className="min-w-full h-[50px] rounded-[62px] bg-[#EDC191] text-[#5A442D] font-semibold"
             >
               Submit
             </button>
@@ -354,7 +355,7 @@ const Page = () => {
       </section>
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
